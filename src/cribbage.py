@@ -5,7 +5,7 @@ from computer_player import ComputerPlayer
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
-    # cp = ComputerPlayer()
-    # deck = Deck()
-    # cp.deal([deck.draw() for x in range(4)], False)
-    # cp.get_crib_cards()
+    cp = ComputerPlayer()
+    deck = Deck()
+    cp.deal([deck.draw() for x in range(6)], False)
+    cp.get_crib_cards()

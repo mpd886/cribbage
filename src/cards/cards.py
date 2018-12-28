@@ -50,3 +50,7 @@ class Deck:
         cards = [Card(r, s) for r in range(1, 13) for s in ["Club", "Diamond", "Heart", "Spade"]]
         random.shuffle(cards)
         return cards
+
+
+def cards_to_string(hand):
+    return " ".join([str(c) for c in hand])
