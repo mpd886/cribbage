@@ -62,9 +62,10 @@ def print_hand(hand):
 
 
 class CribbageScorer:
-    def __init__(self, hand, flip_card):
+    def __init__(self, hand, flip_card, is_crib=False):
         self.hand = hand.copy()
         self.flip = flip_card
+        self.is_crib = is_crib
         self.all_cards = hand.copy()
         self.all_cards.append(self.flip)
         self.runs = {}
@@ -152,8 +153,10 @@ class CribbageScorer:
         if len(suits) == 1:
             if suits.pop() == self.flip.suit:
                 return 5
-            else:
+            elif not self.is_crib:
                 return 4
+            else:
+                return 0
         else:
             return 0
 
