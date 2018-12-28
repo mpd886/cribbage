@@ -73,22 +73,26 @@ class CribbageScorerTests(unittest.TestCase):
     def test_max_points(self):
         hand = generate_hand([(5, SPADES), (11, HEARTS), (5, DIAMONDS), (5, CLUBS)])
         flip = Card(5, HEARTS)
-        self.assertEquals(29, CribbageScorer(hand, flip).tally_points())
+        self.assertEqual(29, CribbageScorer(hand, flip).tally_points())
 
     def test_no_four_card_flush_for_crib(self):
         hand = generate_hand([(2, SPADES), (3, SPADES), (4, SPADES), (5, SPADES)])
         flip = Card(10, HEARTS)
-        self.assertEquals(0, CribbageScorer(hand, flip, True).get_points_for_flush())
+        self.assertEqual(0, CribbageScorer(hand, flip, True).get_points_for_flush())
 
     def test_no_four_card_flush_for_crib2(self):
         hand = generate_hand([(2, HEARTS), (3, SPADES), (4, SPADES), (5, SPADES)])
         flip = Card(10, SPADES)
-        self.assertEquals(0, CribbageScorer(hand, flip, True).get_points_for_flush())
+        self.assertEqual(0, CribbageScorer(hand, flip, True).get_points_for_flush())
 
     def test_five_card_flush_for_crib(self):
         hand = generate_hand([(2, SPADES), (3, SPADES), (4, SPADES), (5, SPADES)])
         flip = Card(10, SPADES)
-        self.assertEquals(5, CribbageScorer(hand, flip, True).get_points_for_flush())
+        self.assertEqual(5, CribbageScorer(hand, flip, True).get_points_for_flush())
+
+    def test_four_card_score(self):
+        hand = generate_hand([(2, SPADES), (3, SPADES), (4, SPADES), (5, SPADES)])
+        self.assertEqual(8, CribbageScorer(hand).tally_points())
 
 
 if __name__ == '__main__':

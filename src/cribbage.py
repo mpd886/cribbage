@@ -63,12 +63,13 @@ def print_hand(hand):
 
 
 class CribbageScorer:
-    def __init__(self, hand, flip_card, is_crib=False):
+    def __init__(self, hand, flip_card=None, is_crib=False):
         self.hand = hand.copy()
         self.flip = flip_card
         self.is_crib = is_crib
         self.all_cards = hand.copy()
-        self.all_cards.append(self.flip)
+        if self.flip is not None:
+            self.all_cards.append(self.flip)
         self.runs = {}
         self.all_sequences = None
 
@@ -124,7 +125,7 @@ class CribbageScorer:
     def get_points_for_flush(self):
         suits = set(map(lambda x: x.suit, self.hand))
         if len(suits) == 1:
-            if suits.pop() == self.flip.suit:
+            if self.flip is not None and suits.pop() == self.flip.suit:
                 return 5
             elif not self.is_crib:
                 return 4
@@ -150,6 +151,9 @@ class CribbageScorer:
         return points
 
     def get_points_for_nobs(self):
+        if self.flip is None:
+            return 0
+
         for c in self.hand:
             if c.rank == JACK and c.suit == self.flip.suit:
                 return 1
