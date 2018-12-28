@@ -1,5 +1,6 @@
 import unittest
-from cribbage import *
+from scorer import CribbageScorer
+from cards import Card
 
 HEARTS = "Hearts"
 CLUBS = "Clubs"
