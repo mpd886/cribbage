@@ -1,5 +1,6 @@
 import random
 import logging
+import utils
 
 
 JACK = 11
@@ -71,41 +72,13 @@ class CribbageScorer:
         self.runs = {}
         self.all_sequences = None
 
-    def _get_subsequence(self, length, all_sequences, tmp_seq, idx):
-        """
-        recursive method that builds sequences
-        :param length: the length of the resulting sequence
-        :param all_sequences: a list holding the sequences
-        :param tmp_seq: the current, temporary sequence being built up
-        :param idx: the current index into the hand
-        :return:
-        """
-        if len(tmp_seq) == length:
-            seq = tmp_seq.copy()
-            seq.sort()
-            all_sequences.append(seq)
-            return
-
-        if idx >= len(self.all_cards):
-            return
-
-        tmp_seq.append(self.all_cards[idx])
-        self._get_subsequence(length, all_sequences, tmp_seq, idx+1)
-        tmp_seq.pop()
-        self._get_subsequence(length, all_sequences, tmp_seq, idx+1)
-
-    def _get_all_sequences(self, length):
-        sequences = []
-        self._get_subsequence(length, sequences, [], 0)
-        return sequences
-
     def _init_analysis(self):
         if self.all_sequences is not None:
             return
 
         self.all_sequences = []
         for x in range(2, 6):
-            self.all_sequences.extend(self._get_all_sequences(x))
+            self.all_sequences.extend(utils.get_subsequences(self.all_cards, x))
 
     @staticmethod
     def sum_cards(cards):
