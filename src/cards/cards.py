@@ -1,6 +1,11 @@
 import random
 
 
+HEARTS = "Hearts"
+CLUBS = "Clubs"
+DIAMONDS = "Diamonds"
+SPADES = "Spades"
+
 JACK = 11
 QUEEN = 12
 KING = 13

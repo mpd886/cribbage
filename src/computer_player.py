@@ -1,6 +1,5 @@
 import utils
 from scorer import CribbageScorer
-from cards import cards_to_string
 
 
 class ComputerPlayer:
@@ -24,6 +23,7 @@ class ComputerPlayer:
         four_card_hands = utils.get_subsequences(self.hand, 4)
         scores = [(CribbageScorer(h).tally_points(), h) for h in four_card_hands]
         scores = sorted(scores, key=lambda x: x[0], reverse=True)
-        for p in scores:
-            print("{}: {}".format(p[0], cards_to_string(p[1])))
-        return []
+        tmp = set(scores[0][1])
+        discard = list(set(self.hand).difference(set(tmp)))
+        self.hand = tmp
+        return discard

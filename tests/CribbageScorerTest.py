@@ -1,11 +1,6 @@
 import unittest
 from scorer import CribbageScorer
-from cards import Card
-
-HEARTS = "Hearts"
-CLUBS = "Clubs"
-DIAMONDS = "Diamonds"
-SPADES = "Spades"
+from cards import Card, HEARTS, CLUBS, SPADES, DIAMONDS
 
 
 def generate_hand(cards):
