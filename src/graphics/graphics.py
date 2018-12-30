@@ -8,7 +8,8 @@ class CribbageDisplay:
     def __init__(self):
         self.screen = None
         self._initialize()
-        self.stop_animation = False
+        # list of objects with update(elapsed_time) and draw() methods
+        self.display_list = []
 
     def _initialize(self):
         pygame.init()
@@ -22,13 +23,20 @@ class CribbageDisplay:
         rect = self.screen.get_rect()
         return Point(int(rect.width/2), int(rect.height/2))
 
-    def update(self, game_manager):
+    def update(self, elapsed_time):
         """
         Draws the screen
-        :param game_manager: cribbage game manager
+        :param elapsed_time: milliseconds since the last time called
         :return:
         """
-        pass
+        for disp_obj in self.display_list:
+            disp_obj.update(elapsed_time)
+
+    def draw(self):
+        self.screen.fill(COLOR_BLACK, self.screen.get_rect())
+        for disp_obj in self.display_list:
+            disp_obj.draw()
+        pygame.display.flip()
 
     def _check_input(self):
         for evt in pygame.event.get():
@@ -38,11 +46,9 @@ class CribbageDisplay:
 
     def run(self):
         clock = pygame.time.Clock()
-        animation = CardSwirlAnimation(self.screen)
+        self.display_list.append(CardSwirlAnimation(self.screen))
         while True:
             elapsed = clock.tick(40)
-            animation.update(elapsed)
-            self.screen.fill(COLOR_BLACK, self.screen.get_rect())
-            animation.draw()
-            pygame.display.flip()
+            self.update(elapsed)
+            self.draw()
             self._check_input()
