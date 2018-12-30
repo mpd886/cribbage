@@ -1,5 +1,5 @@
 import utils
-from scorer import CribbageScorer
+from game.scorer import CribbageScorer
 
 
 class ComputerPlayer:

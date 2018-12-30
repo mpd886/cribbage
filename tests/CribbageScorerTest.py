@@ -1,5 +1,5 @@
 import unittest
-from scorer import CribbageScorer
+from game.scorer import CribbageScorer
 from cards import Card, HEARTS, CLUBS, SPADES, DIAMONDS
 
 

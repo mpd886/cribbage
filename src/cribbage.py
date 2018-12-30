@@ -1,7 +1,7 @@
 import logging
 from cards import Deck
-from computer_player import ComputerPlayer
-from player import HumanPlayer
+from game.computer_player import ComputerPlayer
+from game.player import HumanPlayer
 from graphics import CribbageDisplay
 
 

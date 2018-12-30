@@ -1,6 +1,6 @@
 import unittest
 from cards import Card, HEARTS, CLUBS, SPADES, DIAMONDS
-from computer_player import ComputerPlayer
+from game.computer_player import ComputerPlayer
 
 
 class ComputerPlayerTet(unittest.TestCase):
