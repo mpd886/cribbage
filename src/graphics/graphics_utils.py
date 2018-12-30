@@ -5,6 +5,7 @@ import os
 IMAGES_BASE_DIRECTORY = r'D:\Development\Cribbage\images'
 CARD_BACK_IMAGE = "back.png"
 COLOR_BLACK = (0, 0, 0)
+COLOR_DARK_GREEN = (7, 68, 2)
 
 
 def load_card_images(directory, scale=None):

@@ -33,7 +33,7 @@ class CribbageDisplay:
             disp_obj.update(elapsed_time)
 
     def draw(self):
-        self.screen.fill(COLOR_BLACK, self.screen.get_rect())
+        self.screen.fill(COLOR_DARK_GREEN, self.screen.get_rect())
         for disp_obj in self.display_list:
             disp_obj.draw()
         pygame.display.flip()
