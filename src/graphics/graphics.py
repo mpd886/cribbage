@@ -1,6 +1,5 @@
 import sys
 from utils import Point
-import math
 from .graphics_utils import *
 from .opening import CardSwirlAnimation
 
@@ -30,32 +29,6 @@ class CribbageDisplay:
         :return:
         """
         pass
-
-    def _opening(self):
-        image = load_card_images(IMAGES_BASE_DIRECTORY, (100, 150))[0]
-        card_back = pygame.image.load(os.path.join(IMAGES_BASE_DIRECTORY, CARD_BACK_IMAGE))
-        circle_size = 0.5
-        circle_speed = 0.2
-        circle_grow_speed = 0.1
-        center = self.center()
-        x = center.x
-        y = 0
-        clock = pygame.time.Clock()
-        theta = 0 # degrees
-        while not self.stop_animation:
-            self._check_input()
-            # draw
-            self.screen.fill(COLOR_BLACK, self.screen.get_rect())
-            self.screen.blit(image, (x, center.y+y))
-            pygame.display.flip()
-            dt = clock.tick(40)
-            theta = (theta + dt*circle_speed) % 360
-            radians = math.radians(theta)
-            x += math.sin(radians) * circle_size
-            y += math.cos(radians) * circle_size
-            circle_size += circle_grow_speed
-            if circle_size >= 50 or circle_size <= 0:
-                circle_grow_speed = -circle_grow_speed
 
     def _check_input(self):
         for evt in pygame.event.get():
