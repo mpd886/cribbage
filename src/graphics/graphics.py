@@ -2,6 +2,7 @@ import sys
 from utils import Point
 from .graphics_utils import *
 from .opening import CardSwirlAnimation
+from .game_display import GameDisplay
 
 
 class CribbageDisplay:
@@ -29,8 +30,12 @@ class CribbageDisplay:
         :param elapsed_time: milliseconds since the last time called
         :return:
         """
+        disposed = []
         for disp_obj in self.display_list:
-            disp_obj.update(elapsed_time)
+            if disp_obj.update(elapsed_time):
+                disposed.append(disp_obj)
+        for d in disposed:
+            self.display_list.remove(d)
 
     def draw(self):
         self.screen.fill(COLOR_DARK_GREEN, self.screen.get_rect())
@@ -46,7 +51,8 @@ class CribbageDisplay:
 
     def run(self):
         clock = pygame.time.Clock()
-        self.display_list.append(CardSwirlAnimation(self.screen))
+        #self.display_list.append(CardSwirlAnimation(self.screen))
+        self.display_list.append(GameDisplay(self.screen))
         while True:
             elapsed = clock.tick(40)
             self.update(elapsed)

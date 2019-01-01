@@ -27,3 +27,6 @@ class ComputerPlayer:
         discard = list(set(self.hand).difference(set(tmp)))
         self.hand = tmp
         return discard
+
+    def get_cards(self):
+        return self.hand

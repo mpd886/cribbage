@@ -48,7 +48,7 @@ class CardSwirlAnimation:
         Update the animation
         :param parent: surface on which we are drawing
         :param elapsed_time: elapsed time (ms)
-        :return:
+        :return: return True if done
         """
         self.card_delay += elapsed_time
         for card in self.moving:
@@ -57,6 +57,7 @@ class CardSwirlAnimation:
             card = self.images.pop()
             self._init_card(card)
             self.card_delay = 0
+        return False
 
     def draw(self):
         if len(self.images) > 0:

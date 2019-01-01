@@ -1,27 +1,6 @@
 import logging
-from cards import Deck
-from game.computer_player import ComputerPlayer
-from game.player import HumanPlayer
 from graphics import CribbageDisplay
 
-
-class Cribbage:
-    HUMAN = "human"
-    COMPUTER = "computer"
-
-    def __init__(self):
-        self.deck = None
-        self.starter = None
-        self.board = None
-        self.players = {Cribbage.HUMAN: HumanPlayer(),
-                        Cribbage.COMPUTER: ComputerPlayer()}
-
-    def play(self):
-        self.deck = Deck()
-        self.board = {Cribbage.HUMAN: 0,
-                      Cribbage.COMPUTER: 0}
-
-        #
 
 
 if __name__ == "__main__":
