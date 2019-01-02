@@ -1,11 +1,12 @@
 import os
 import pygame
 import graphics.graphics_utils as gutils
+from graphics.display_object import DisplayObject
 from game.game_manager import Cribbage
 from utils import Point
 
 
-class GameDisplay:
+class GameDisplay(DisplayObject):
     CARD_HEIGHT = 300
     CARD_WIDTH = 200
     """
@@ -15,7 +16,7 @@ class GameDisplay:
         """
         :param parent: parent surface on which to draw
         """
-        self.parent = parent
+        super().__init__(parent)
         self.game = Cribbage()
         self.game.play()
         self.card_back = GameDisplay.load_image(os.path.join(gutils.IMAGES_BASE_DIRECTORY, gutils.CARD_BACK_IMAGE))

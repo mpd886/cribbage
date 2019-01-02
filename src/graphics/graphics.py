@@ -5,12 +5,17 @@ from .opening import CardSwirlAnimation
 from .game_display import GameDisplay
 
 
+GAME_STATE_OPENING = 1
+GAME_STATE_CRIBBAGE = 2
+
+
 class CribbageDisplay:
     def __init__(self):
         self.screen = None
         self._initialize()
         # list of objects with update(elapsed_time) and draw() methods
         self.display_list = []
+        self.state = GAME_STATE_OPENING
 
     def _initialize(self):
         pygame.init()
@@ -45,14 +50,35 @@ class CribbageDisplay:
 
     def _check_input(self):
         for evt in pygame.event.get():
-            if evt.type == pygame.KEYDOWN:
-                if evt.key == pygame.K_q:
-                    sys.exit(0)
+            if evt.type == pygame.KEYDOWN or evt.type == pygame.KEYUP:
+                self._process_key_event(evt)
+            elif evt.type in [pygame.MOUSEMOTION, pygame.MOUSEBUTTONUP, pygame.MOUSEBUTTONDOWN]:
+                self._process_mouse_event(evt)
+            elif evt.type == pygame.QUIT:
+                sys.exit(0)
+
+    def _process_key_event(self, evt):
+        for obj in self.display_list[::-1]:
+            if obj.handle_key_event(evt):
+                return
+
+        if evt.type == pygame.KEYDOWN:
+            if evt.key == pygame.K_q:
+                sys.exit(0)
+            elif evt.key == pygame.K_p and self.state == GAME_STATE_OPENING:
+                self.display_list.pop()
+                self.display_list.append(GameDisplay(self.screen))
+                self.state = GAME_STATE_CRIBBAGE
+
+    def _process_mouse_event(self, evt):
+        for obj in self.display_list[::-1]:
+            if obj.handle_mouse_event(evt):
+                return
+        # no default mouse handling required
 
     def run(self):
         clock = pygame.time.Clock()
-        #self.display_list.append(CardSwirlAnimation(self.screen))
-        self.display_list.append(GameDisplay(self.screen))
+        self.display_list.append(CardSwirlAnimation(self.screen))
         while True:
             elapsed = clock.tick(40)
             self.update(elapsed)

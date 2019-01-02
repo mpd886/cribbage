@@ -3,6 +3,7 @@ import os
 import math
 import random
 from graphics import graphics_utils as gutils
+from graphics.display_object import DisplayObject
 from utils import Point
 
 
@@ -30,17 +31,17 @@ class MovingCard:
             self.growth_direction = -self.growth_direction
 
 
-class CardSwirlAnimation:
+class CardSwirlAnimation(DisplayObject):
     """
     This animation shows cards "flying" off the deck into a swirl shape.
     """
     def __init__(self, parent):
+        super().__init__(parent)
         self.images = gutils.load_card_images(gutils.IMAGES_BASE_DIRECTORY, (100, 150))
         random.shuffle(self.images)
         self.back = pygame.image.load(os.path.join(gutils.IMAGES_BASE_DIRECTORY, gutils.CARD_BACK_IMAGE))
         self.back = pygame.transform.scale(self.back, (100, 150))
         self.moving = [] # list of moving cards
-        self.parent = parent
         self.card_delay = 0
 
     def update(self, elapsed_time):

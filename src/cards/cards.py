@@ -32,11 +32,11 @@ class Card:
         return result
 
     def __str__(self):
-        face_cards = {11: 'J', 12: 'Q', 13: 'K'}
-        if self.rank <= 10:
-            return f'{self.rank}{self.suit[0]}'
-        else:
+        face_cards = {1: 'A', 11: 'J', 12: 'Q', 13: 'K'}
+        if self.rank in face_cards:
             return f'{face_cards[self.rank]}{self.suit[0]}'
+        else:
+            return f'{self.rank}{self.suit[0]}'
 
     @property
     def val(self):
