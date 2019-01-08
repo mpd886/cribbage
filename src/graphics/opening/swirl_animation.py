@@ -14,12 +14,12 @@ SWIRL_GROW_SPEED = 0.1
 
 class MovingCard:
     def __init__(self, card, x, y):
-        self.x = x
-        self.y = y
         self.card = card
         self.theta_degrees = 0
         self.swirl_size = CIRCLE_RADIUS
         self.growth_direction = 1
+        self.x = x
+        self.y = y
 
     def update(self, elapsed_time):
         self.theta_degrees = (self.theta_degrees + elapsed_time * SWIRL_SPEED) % 360
@@ -62,9 +62,21 @@ class CardSwirlAnimation(DisplayObject):
 
     def draw(self):
         if len(self.images) > 0:
-            self.parent.blit(self.back, self._get_deck_position())
+            center = self._get_deck_position()
+            rect = self.back.get_rect()
+            self.parent.blit(self.back, Point(center.x - rect.width/2, center.y - rect.height/2))
         for card in self.moving:
-            self.parent.blit(card.card, (card.x, card.y))
+            self.parent.blit(card.card, self.translate(card))
+
+    def translate(self, card):
+        """
+        finds the left/top coords of the given MovingCard
+        :return: (x,y) pair
+        """
+        rect = card.card.get_rect()
+        x = card.x - rect.width/2
+        y = card.y - rect.height/2
+        return (x, y)
 
     def _init_card(self, card):
         deck_pos = self._get_deck_position()

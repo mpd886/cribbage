@@ -1,4 +1,5 @@
 import random
+from utils import Point
 
 
 HEARTS = "Hearts"
@@ -12,9 +13,10 @@ KING = 13
 
 
 class Card:
-    def __init__(self, rank, suit):
+    def __init__(self, rank, suit, x=0, y=0):
         self.rank = rank
         self.suit = suit
+        self.pos = Point(x, y)
 
     def __eq__(self, other):
         return self.rank == other.rank and self.suit and other.suit
