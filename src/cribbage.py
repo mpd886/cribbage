@@ -1,6 +1,6 @@
 import sys
 import logging
-from graphics import GraphicsObject, GameIntro
+from graphics import GraphicsObject, GameIntro, GameDisplay
 from game import game_state
 
 
@@ -11,7 +11,7 @@ def main():
         if state == game_state.GAME_STATE_INTRO:
             state = GameIntro(graphics).run()
         elif state == game_state.GAME_STATE_PLAY:
-            pass
+            state = GameDisplay(graphics).run()
         elif state == game_state.GAME_STATE_QUIT:
             logging.debug("QUITTING")
             sys.exit(0)

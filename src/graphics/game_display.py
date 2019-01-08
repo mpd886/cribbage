@@ -1,26 +1,28 @@
 import os
 import pygame
 import graphics.graphics_utils as gutils
-from graphics.display_object import DisplayObject
 from game.game_manager import Cribbage
 from utils import Point
+from game import game_state
 
 
-class GameDisplay(DisplayObject):
+class GameDisplay:
     CARD_HEIGHT = 300
     CARD_WIDTH = 200
     """
     This is the main game loop/display.
     """
-    def __init__(self, parent):
+    def __init__(self, graphics):
         """
         :param parent: parent surface on which to draw
         """
-        super().__init__(parent)
+        self.graphics = graphics
         self.game = Cribbage()
         self.game.play()
         self.card_back = GameDisplay.load_image(os.path.join(gutils.IMAGES_BASE_DIRECTORY, gutils.CARD_BACK_IMAGE))
         self.card_images = self._load_cards()
+        self.keep_going = True
+        self.state = None
 
     def _load_cards(self):
         images = {}
@@ -44,7 +46,8 @@ class GameDisplay(DisplayObject):
         return False
 
     def draw(self):
-        rect = self.parent.get_rect()
+        rect = self.graphics.get_rect()
+        self.graphics.clear_screen(gutils.COLOR_DARK_GREEN)
         center = Point(rect.width/2, rect.height/2)
         self.draw_card(self.card_back, Point(300, center.y))
 
@@ -65,9 +68,26 @@ class GameDisplay(DisplayObject):
             self.draw_card(image, Point(x, y))
             x += OVERLAP
 
+        self.graphics.flip()
+
     def draw_card(self, card, center_point):
         """Draw a card centered on the center_point
         """
         top = center_point.y - card.get_rect().height/2
         left = center_point.x - card.get_rect().width/2
-        self.parent.blit(card, (left, top))
+        self.graphics.blit(card, (left, top))
+
+    def run(self):
+        while self.keep_going:
+            self.draw()
+            self.update(self.graphics.clock.tick(40))
+            self.check_input()
+
+        return self.state
+
+    def check_input(self):
+        for evt in pygame.event.get():
+            if evt.type == pygame.QUIT or (evt.type == pygame.KEYDOWN and evt.key == pygame.K_q):
+                self.state = game_state.GAME_STATE_QUIT
+                self.keep_going = False
+                return
