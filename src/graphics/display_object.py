@@ -4,9 +4,11 @@ class DisplayObject:
     def __init__(self, parent):
         """
         create display object
-        :param parent: parent pygame.Surface
+        :param parent:  GraphicsObject object
         """
         self.parent = parent
+
+
 
     def update(self, elapsed_time):
         """

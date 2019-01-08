@@ -1,6 +1,23 @@
+import sys
 import logging
-from graphics import CribbageDisplay
+from graphics import GraphicsObject, GameIntro
+from game import game_state
 
+
+def main():
+    graphics = GraphicsObject()
+    state = game_state.GAME_STATE_INTRO
+    while True:
+        if state == game_state.GAME_STATE_INTRO:
+            state = GameIntro(graphics).run()
+        elif state == game_state.GAME_STATE_PLAY:
+            pass
+        elif state == game_state.GAME_STATE_QUIT:
+            logging.debug("QUITTING")
+            sys.exit(0)
+        else:
+            logging.error(f"Unknown game state {state}")
+            state = game_state.GAME_STATE_INTRO
 
 
 if __name__ == "__main__":
@@ -13,6 +30,5 @@ if __name__ == "__main__":
     #       get crib cards
     #       get starter card
     #
-    logging.basicConfig(level=logging.DEBUG)
-    display = CribbageDisplay()
-    display.run()
+    logging.basicConfig(level=logging.DEBUG, filename="cribbage.log")
+    main()

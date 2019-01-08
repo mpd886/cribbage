@@ -1,7 +1,7 @@
 import sys
 from utils import Point
 from .graphics_utils import *
-from .opening import CardSwirlAnimation
+from .opening import GameIntro
 from .game_display import GameDisplay
 
 
@@ -78,7 +78,7 @@ class CribbageDisplay:
 
     def run(self):
         clock = pygame.time.Clock()
-        self.display_list.append(CardSwirlAnimation(self.screen))
+        self.display_list.append(GameIntro(self.screen))
         while True:
             elapsed = clock.tick(40)
             self.update(elapsed)
